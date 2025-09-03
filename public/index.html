@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lâche un vocal !</title>
+  <title>Lâche un vocal bébé <3</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#0b0b10;color:#fff;margin:0}
-    .card{background:#12121a;border:1px solid #24243a;border-radius:20px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,.35);max-width:560px;width:100%;text-align:center}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#ffbae4;color:#fff;margin:0}
+    .card{background:#ffa1db;border:1px solid #ff5bc0;border-radius:20px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,.35);max-width:560px;width:100%;text-align:center}
     h1{font-size:32px;margin:0 0 18px}
     .record{width:120px;height:120px;border-radius:999px;background:#ef4444;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;border:none;cursor:pointer}
     .record.square{border-radius:24px}
@@ -15,20 +15,34 @@
     .btn.primary{background:#2563eb;border-color:#2563eb}
     #timer{font-variant-tabular-nums:tabular-nums;margin-top:10px;opacity:.85}
     #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#16a34a;color:#fff;padding:10px 16px;border-radius:999px;display:none}
+/* L'image d'angle, fixe en bas à droite, sous le contenu */
+.corner-img{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: min(40vw, 260px);   /* responsive : max 260px ou 40% de la largeur */
+  height: auto;
+  z-index: 1;                /* sous la carte et le bouton */
+  pointer-events: none;      /* ne capte pas les clics (pour ne pas gêner REC) */
+  opacity: .95;              /* léger fondu, optionnel */
+}
+/* S'assure que la carte et le bouton passent devant l'image */
+.card{ position: relative; z-index: 2; }
+.record{ position: relative; z-index: 3; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Lâche un vocal !</h1>
+    <h1>Lâche un vocal bébé <3</h1>
     <button id="recBtn" class="record">REC</button>
     <div id="timer">00:00</div>
     <div class="row" id="postActions" style="display:none">
       <button class="btn" id="deleteBtn">Supprimer</button>
       <button class="btn primary" id="sendBtn">Envoyer</button>
     </div>
-    <p style="opacity:.65;margin-top:12px;font-size:14px">Jusqu'à 10:00. Micro requis.</p>
+    <p style="opacity:.65;margin-top:12px;font-size:14px">Fais-toi plaiz t'as jusqu'à 10min</p>
   </div>
-  <div id="toast">Ton message vocal a été envoyé !</div>
+  <div id="toast">Ton mot doux a été envoyé !</div>
 
 <script>
 (function(){
@@ -91,5 +105,6 @@
   };
 })();
 </script>
+<img src="/val_adri.png" alt="Val & Adri" class="corner-img" />
 </body>
 </html>
