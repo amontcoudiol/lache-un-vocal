@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Écouter les vocaux</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:#0b0b10;color:#fff;margin:0;padding:24px}
+    h1{margin:0 0 16px}
+    .item{display:flex;align-items:center;gap:12px;border-bottom:1px solid #24243a;padding:12px 0}
+    .dot{width:10px;height:10px;border-radius:999px;background:#ef4444;display:inline-block}
+    audio{width:300px}
+    .meta{opacity:.7;font-size:12px}
+  </style>
+</head>
+<body>
+  <h1>Messages vocaux</h1>
+  <div id="list">Chargement…</div>
+
+<script>
+(async function(){
+  const slug = (location.pathname.match(/ecouter-([\w-]+)\.html$/)||[])[1]||'';
+  const listEl = document.getElementById('list');
+
+  async function load(){
+    const res = await fetch(`/api/list?slug=${encodeURIComponent(slug)}`);
+    const data = await res.json();
+    if (!Array.isArray(data)){ listEl.textContent = 'Erreur de chargement'; return; }
+    listEl.innerHTML = '';
+    for (const m of data){
+      const row = document.createElement('div'); row.className='item';
+      const dot = document.createElement('span'); dot.className='dot'; dot.style.visibility = m.is_read? 'hidden':'visible';
+      const audio = document.createElement('audio'); audio.controls=true; audio.src=m.url;
+      audio.addEventListener('play', async ()=>{
+        if (!m.is_read){
+          m.is_read = true; dot.style.visibility = 'hidden';
+          fetch('/api/mark-read', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ id: m.id, slug }) }).catch(()=>{});
+        }
+      }, { once:true });
+      const meta = document.createElement('span'); meta.className='meta';
+      const dt = new Date(m.created_at);
+      meta.textContent = ` ${dt.toLocaleString()} • ${Math.round(m.duration_sec)}s`;
+      row.append(dot, audio, meta);
+      listEl.appendChild(row);
+    }
+  }
+
+  await load();
+})();
+</script>
+</body>
+</html>
