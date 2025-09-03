@@ -1,0 +1,10 @@
+{
+  "name": "lache-un-vocal",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
