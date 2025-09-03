@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/**/*.mjs": { "runtime": "nodejs20.x" }
+  },
+  "headers": [
+    {
+      "source": "/ecouter-:slug.html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    }
+  ]
+}
